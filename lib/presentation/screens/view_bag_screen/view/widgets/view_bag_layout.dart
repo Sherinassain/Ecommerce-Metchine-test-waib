@@ -162,7 +162,11 @@ class ViewBagLayout extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return RemoveItemDialog(
+                        return CustomItemDialog(
+                          buttonText2: 'Remove',
+                          buttonText1: 'Cancel',
+                          subTitle: 'Are you sure you want to remove this item from your cart?',
+                          title: 'Remove Item',
                           onRemove: () {
                             cartCtrl.removeItem(cartCtrl.items[index]);
                           },

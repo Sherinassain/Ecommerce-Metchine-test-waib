@@ -11,9 +11,9 @@ RouteName _routeName = RouteName();
 class AppRoute {
   final List<GetPage> getPages = [
     GetPage(
-        name: _routeName.splashScreen, page: () => const SplashScreen(),),
+        name: '/', page: () => const SplashScreen(),),
           GetPage(
-        name: '/', page: () =>const  HomeScreen(),),
+        name: _routeName.homeScreen, page: () =>const  HomeScreen(),),
         GetPage(
         name: _routeName.viewBagScreen, page: () =>const  ViewBagScreen(),),
         

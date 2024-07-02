@@ -85,7 +85,9 @@ class CartController extends GetxController {
           .toList();
     }
   }
-
+ void clearCart() {
+    items.clear();
+  }
   @override
   void onInit() {
     _loadFromStorage();

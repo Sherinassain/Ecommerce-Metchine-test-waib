@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RemoveItemDialog extends StatelessWidget {
+class CustomItemDialog extends StatelessWidget {
   final VoidCallback onRemove;
+  final String title;
+  final String subTitle;
+  final String buttonText1;
+  final String buttonText2;
 
-  RemoveItemDialog({required this.onRemove});
+  CustomItemDialog({required this.onRemove,required this.buttonText1,required this.buttonText2,required this.subTitle,required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        'Remove Item',
+        title,
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 5.sp),
       ),
       content: Text(
-        'Are you sure you want to remove this item from your cart?',
+        subTitle,
         style: TextStyle(
             color: Colors.black, fontWeight: FontWeight.w600, fontSize: 4.sp),
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child:  Text(buttonText1),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: const Text('Remove'),
+          child:  Text(buttonText2),
           onPressed: () {
             onRemove();
             Navigator.of(context).pop();
