@@ -2,16 +2,19 @@ import 'package:ecommerce/core/constants/color.dart';
 import 'package:ecommerce/core/constants/image.dart';
 import 'package:ecommerce/core/constants/textstyle.dart';
 import 'package:ecommerce/core/utiles/app_screen_util.dart';
+import 'package:ecommerce/core/utiles/app_utils.dart';
 import 'package:ecommerce/presentation/screens/home_screen/view/widgets/grid_list_tile.dart';
 import 'package:ecommerce/presentation/screens/view_bag_screen/controller/cart_controller.dart';
 import 'package:ecommerce/presentation/screens/view_bag_screen/view/widgets/view_bag_layout.dart';
 import 'package:ecommerce/presentation/widgets/custom_button.dart';
+import 'package:ecommerce/presentation/widgets/remove_item_alert_dilogue.dart';
 import 'package:ecommerce/routes/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
 
 class ViewBagScreen extends StatefulWidget {
   const ViewBagScreen({super.key});
@@ -25,8 +28,8 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
   final cartCtrl = Get.put(CartController());
   @override
   void initState() {
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-    cartCtrl.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cartCtrl.onInit();
     });
 
     super.initState();
@@ -42,55 +45,49 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
                   right: AppScreenUtil().screenWidth(30),
                   bottom: AppScreenUtil().screenHeight(10),
                   top: AppScreenUtil().screenHeight(10)),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed(routeName.viewBagScreen);
-                },
-                child: Container(
-                  // height: AppScreenUtil().screenHeight(20),
-                  // width: AppScreenUtil().screenWidth(80),
-                  decoration: BoxDecoration(
+              child: Obx(
+                () => Text(
+                  'Bag Total : \$${cartCtrl.totalPrice.toStringAsFixed(2)}',
+                  style: TextStyle(
                       color: ColorConst.green3D,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: AppScreenUtil().screenHeight(5),
-                        horizontal: AppScreenUtil().screenWidth(5)),
-                    child: Row(
-                      children: [
-                        ImageIcon(
-                          AssetImage(
-                            ImageCons.shoppingBag,
-                          ),
-                          // size: AppScreenUtil().screenWidth(26),
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: AppScreenUtil().screenWidth(2),
-                        ),
-                        Text(
-                          'View Bag',
-                          style: TextStyle(
-                              color: Colors.white,
-                              // fontWeight: FontWeight.bold,
-                              fontSize: 3.sp),
-                        )
-                      ],
-                    ),
-                  ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 5.sp),
                 ),
               ),
             )
           ],
         ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Obx(
-            () => Column(
-              children: [
-                (cartCtrl.items.isNotEmpty)
-                    ? Column(
-                        children: List.generate(cartCtrl.items.length, (index) {
+        body: Obx(
+          () => (cartCtrl.items.isEmpty)
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Lottie.asset(
+                        'assets/images/Empty_animation.json', // Path to your .json animation file
+                        width: 300,
+                        height: 300,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      "Cart Empty! Add Items",
+                      style: TextStyleClass.poppinsMedium(
+                          color: ColorConst.grey83, size: 20.0),
+                    ),
+                  ],
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      Column(
+                          children:
+                              List.generate(cartCtrl.items.length, (index) {
                         return ViewBagLayout(
                           index: index,
                           image: cartCtrl.items[index].product.thumbnail,
@@ -100,46 +97,62 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
                               ? cartCtrl.items[index].product.price.toString()
                               : '0.0',
                         );
-                      }))
-                    : Center(
-                        child: Text(
-                          "Cart Empty!",
-                          style: TextStyleClass.poppinsMedium(
-                              color: ColorConst.grey83, size: 20.0),
+                      })),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Visibility(
+                        visible: (cartCtrl.items.isNotEmpty) ? true : false,
+                        child: Padding(
+                          padding:
+                              EdgeInsets.all(AppScreenUtil().screenWidth(8)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Bag Total : \$${cartCtrl.totalPrice.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    color: ColorConst.green3D,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 5.sp),
+                              ),
+
+                              ///Place order button
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return CustomItemDialog(
+                                        buttonText2: 'Confirm',
+                                        buttonText1: 'Cancel',
+                                        subTitle:
+                                            'Are you sure you want to place this order?',
+                                        title: 'Confirm Order',
+                                        onRemove: () {
+                                          cartCtrl.clearCart();
+                                          AppUtils.oneTimeSnackBar(
+                                              'Order Placed Successfully',
+                                              bgColor: ColorConst.green3D);
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                                child: CustomButton(
+                                    buttonColor: ColorConst.green3D,
+                                    buttonIcon: ImageCons.shoppingBag,
+                                    buttonText: 'Place Order',
+                                    buttonTextSize: 3.sp),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Visibility(
-                  visible: (cartCtrl.items.isNotEmpty) ? true : false,
-                  child: Padding(
-                    padding: EdgeInsets.all(AppScreenUtil().screenWidth(8)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Bag Total : \$${cartCtrl.totalPrice.toStringAsFixed(2)}',
-                          style: TextStyle(
-                              color: ColorConst.green3D,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 5.sp),
-                        ),
-
-                        ///Place order button
-                        CustomButton(
-                            buttonColor: ColorConst.green3D,
-                            buttonIcon: ImageCons.shoppingBag,
-                            buttonText: 'Place Order',
-                            buttonTextSize: 3.sp)
-                      ],
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
         ));
   }
 }
