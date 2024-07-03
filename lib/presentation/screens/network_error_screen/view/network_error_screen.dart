@@ -2,6 +2,7 @@ import 'package:ecommerce/core/constants/color.dart';
 import 'package:ecommerce/core/constants/image.dart';
 import 'package:ecommerce/core/constants/textstyle.dart';
 import 'package:ecommerce/core/utiles/app_utils.dart';
+import 'package:ecommerce/presentation/screens/network_error_screen/controller/network_controller.dart';
 import 'package:ecommerce/presentation/screens/splash_screen/view/splash_screen.dart';
 import 'package:ecommerce/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class NetworkErrorScreen extends StatefulWidget {
 }
 
 class _NetworkErrorScreenState extends State<NetworkErrorScreen> {
+  final networkCtrl = Get.put(NetworkController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +39,8 @@ class _NetworkErrorScreenState extends State<NetworkErrorScreen> {
               height: 10,
             ),
             GestureDetector(
-              onTap: () async {
-                if (await AppUtils.isOnline()) {
-                  Get.offAll(const SplashScreen());
-                } else {
-                  AppUtils.oneTimeSnackBar('No internet connection!',
-                      bgColor: ColorConst.green3D);
-                }
+              onTap: () {
+                networkCtrl.checkNetwork();
               },
               child: CustomButton(
                   buttonColor: ColorConst.green3D,

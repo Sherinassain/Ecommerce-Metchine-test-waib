@@ -2,11 +2,13 @@ import 'package:ecommerce/core/constants/color.dart';
 import 'package:ecommerce/core/constants/image.dart';
 import 'package:ecommerce/core/constants/textstyle.dart';
 import 'package:ecommerce/core/utiles/app_screen_util.dart';
+import 'package:ecommerce/presentation/screens/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/screens/home_screen/view/widgets/grid_list_tile.dart';
 import 'package:ecommerce/presentation/screens/product_screen/controller/product_controller.dart';
 import 'package:ecommerce/presentation/screens/product_screen/view/widgets/grid_list_tile.dart';
 import 'package:ecommerce/presentation/screens/view_bag_screen/controller/cart_controller.dart';
 import 'package:ecommerce/routes/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -26,9 +28,15 @@ class _ProductScreenState extends State<ProductScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      productCtrl.getProductList();
+      if (kIsWeb) {
+        productCtrl.getProductListWeb();
+      } else {
+        productCtrl.getProductList();
+      }
     });
   }
+
+  final bottomNavCtrl = Get.put(BottomNavController());
 
   DateTime? lastPressed;
   final cartCtrl = Get.put(CartController());
@@ -70,7 +78,8 @@ class _ProductScreenState extends State<ProductScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(routeName.viewBagScreen);
+                    // Get.toNamed(routeName.viewBagScreen);
+                    bottomNavCtrl.selectedIndex.value = 3;
                   },
                   child: Container(
                     decoration: BoxDecoration(

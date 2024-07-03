@@ -66,6 +66,7 @@ flutter:
     - assets/images/img_splash.png
     - assets/images/img_wifi.png
     - assets/images/splash_animation.json
+    - assets/images/img_no_image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

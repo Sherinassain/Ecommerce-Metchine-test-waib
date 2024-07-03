@@ -60,6 +60,35 @@ class APIHelper {
   ///try catch inside get was removed later since 500 is added in status code now it may required! //todo:
   ///for get methode
   ///if final url is null then only other urls applied
+  static getDataWeb(
+      {required String endPoint,
+      required Map<String, String> header,
+      String? finalUrl}) async {
+    // if (await AppUtils.isOnline()) {
+      final uri = Uri.parse(finalUrl ?? (AppConfig.finalUrl + endPoint));
+      AppUtils.logger.i(uri);
+      final res = await http.get(uri, headers: header);
+      AppUtils().printData('getData res ${utf8.decode(res.bodyBytes)}');
+      if (isRequestSucceeded(res.statusCode)) {
+        var resBody = json.decode(utf8.decode(res.bodyBytes));
+        if (res.statusCode == 200 || res.statusCode == 201) {
+          return APIResponse(data: resBody, error: false, errorMessage: '');
+        } else {
+          return APIResponse(
+              data: resBody,
+              error: true,
+              errorMessage: resBody['message'] ?? 'Something went wrong!');
+        }
+      } else {
+        return APIResponse(
+            data: '', error: true, errorMessage: 'Something went wrong!');
+      }
+    // } else {
+    //   Get.offAll(NetworkErrorScreen());
+    //   return APIResponse(
+    //       data: '', error: true, errorMessage: 'No Internet Connection!');
+    // }
+  }
   static getData(
       {required String endPoint,
       required Map<String, String> header,
@@ -89,7 +118,6 @@ class APIHelper {
           data: '', error: true, errorMessage: 'No Internet Connection!');
     }
   }
-
   //for post
   ///endpoint is applied olny if finalUrl is empty
   static Future<APIResponse> postData(

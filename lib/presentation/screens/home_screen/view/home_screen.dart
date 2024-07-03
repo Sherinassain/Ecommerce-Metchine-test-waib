@@ -2,10 +2,12 @@ import 'package:ecommerce/core/constants/color.dart';
 import 'package:ecommerce/core/constants/image.dart';
 import 'package:ecommerce/core/constants/textstyle.dart';
 import 'package:ecommerce/core/utiles/app_screen_util.dart';
+import 'package:ecommerce/presentation/screens/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:ecommerce/presentation/screens/home_screen/controller/home_controller.dart';
 import 'package:ecommerce/presentation/screens/home_screen/view/widgets/grid_list_tile.dart';
 import 'package:ecommerce/presentation/screens/view_bag_screen/controller/cart_controller.dart';
 import 'package:ecommerce/routes/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -21,11 +23,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final homeCtrl = Get.put(HomeController());
+  final bottomNavCtrl = Get.put(BottomNavController());
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      homeCtrl.getProductList();
+      if (kIsWeb) {
+        homeCtrl.getProductListWeb();
+      } else {
+        homeCtrl.getProductList();
+      }
     });
   }
 
@@ -68,7 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(routeName.viewBagScreen);
+                  // Get.toNamed(routeName.viewBagScreen);
+                  bottomNavCtrl.selectedIndex.value = 3;
                 },
                 child: Container(
                   decoration: BoxDecoration(
