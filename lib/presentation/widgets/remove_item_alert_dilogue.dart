@@ -8,30 +8,35 @@ class CustomItemDialog extends StatelessWidget {
   final String buttonText1;
   final String buttonText2;
 
-  CustomItemDialog({required this.onRemove,required this.buttonText1,required this.buttonText2,required this.subTitle,required this.title});
+  CustomItemDialog(
+      {required this.onRemove,
+      required this.buttonText1,
+      required this.buttonText2,
+      required this.subTitle,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
         title,
-        style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 5.sp),
+        style: const TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
       ),
       content: Text(
         subTitle,
-        style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 4.sp),
+        style: const TextStyle(
+            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 13),
       ),
       actions: <Widget>[
         TextButton(
-          child:  Text(buttonText1),
+          child: Text(buttonText1),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child:  Text(buttonText2),
+          child: Text(buttonText2),
           onPressed: () {
             onRemove();
             Navigator.of(context).pop();

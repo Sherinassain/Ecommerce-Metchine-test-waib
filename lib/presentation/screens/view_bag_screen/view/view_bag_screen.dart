@@ -51,7 +51,7 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
                   style: TextStyle(
                       color: ColorConst.green3D,
                       fontWeight: FontWeight.bold,
-                      fontSize: 5.sp),
+                      fontSize: 16),
                 ),
               ),
             )
@@ -115,7 +115,7 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
                                 style: TextStyle(
                                     color: ColorConst.green3D,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 5.sp),
+                                    fontSize: 16),
                               ),
 
                               ///Place order button
@@ -144,7 +144,7 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
                                     buttonColor: ColorConst.green3D,
                                     buttonIcon: ImageCons.shoppingBag,
                                     buttonText: 'Place Order',
-                                    buttonTextSize: 3.sp),
+                                    buttonTextSize: 13),
                               )
                             ],
                           ),

@@ -59,10 +59,10 @@ class ViewBagLayout extends StatelessWidget {
               ),
               Text(
                 title.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 6.sp),
+                    fontSize: 16),
                 maxLines: 2,
               ),
               SizedBox(
@@ -105,8 +105,8 @@ class ViewBagLayout extends StatelessWidget {
                       cartCtrl.decrementQuantity(cartCtrl.items[index]);
                     },
                     child: Container(
-                      height: AppScreenUtil().screenWidth(7),
-                      width: AppScreenUtil().screenWidth(7),
+                      height: 30,
+                      width: 30,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           color: ColorConst.redButtonColor),
@@ -123,10 +123,10 @@ class ViewBagLayout extends StatelessWidget {
                   ),
                   Text(
                     cartCtrl.items[index].quantity.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 5.sp),
+                        fontSize: 15),
                   ),
                   SizedBox(
                     width: AppScreenUtil().screenWidth(4),
@@ -136,8 +136,8 @@ class ViewBagLayout extends StatelessWidget {
                       cartCtrl.incrementQuantity(cartCtrl.items[index]);
                     },
                     child: Container(
-                      height: AppScreenUtil().screenWidth(7),
-                      width: AppScreenUtil().screenWidth(7),
+                      height: 30,
+                      width: 30,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
                           color: ColorConst.green3D),
@@ -165,7 +165,8 @@ class ViewBagLayout extends StatelessWidget {
                         return CustomItemDialog(
                           buttonText2: 'Remove',
                           buttonText1: 'Cancel',
-                          subTitle: 'Are you sure you want to remove this item from your cart?',
+                          subTitle:
+                              'Are you sure you want to remove this item from your cart?',
                           title: 'Remove Item',
                           onRemove: () {
                             cartCtrl.removeItem(cartCtrl.items[index]);
@@ -178,7 +179,7 @@ class ViewBagLayout extends StatelessWidget {
                       buttonColor: ColorConst.red,
                       buttonIcon: ImageCons.shoppingBag,
                       buttonText: 'Remove Item',
-                      buttonTextSize: 3.sp))
+                      buttonTextSize: 12))
             ],
           ),
         ),
