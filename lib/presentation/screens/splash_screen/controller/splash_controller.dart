@@ -3,21 +3,25 @@ import 'package:ecommerce/core/utiles/app_utils.dart';
 import 'package:ecommerce/presentation/screens/bottom_nav/view/bottom_navigation.dart';
 import 'package:ecommerce/presentation/screens/network_error_screen/view/network_error_screen.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
   var isLoading = true.obs;
   bool isTapped = false;
 
-  void checkConnectivity() async {
+  void checkConnectivity(BuildContext context) async {
     isTapped = false;
     // update();
-    await Future.delayed(Durations.s3);
+
+    await Future.delayed(Duration(seconds: 3));
     isTapped = true;
     update();
-    await Future.delayed(Durations.s1);
+    await Future.delayed(Duration(seconds: 1));
     if (kIsWeb) {
-      Get.off(const BottomNav());
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const BottomNav()),
+      );
     } else {
       ///redirect to no internet screen if internet is not available
       if (await AppUtils.isOnline()) {
@@ -26,7 +30,6 @@ class SplashController extends GetxController {
         Get.to(const NetworkErrorScreen());
       }
     }
-
     super.onInit();
   }
 }

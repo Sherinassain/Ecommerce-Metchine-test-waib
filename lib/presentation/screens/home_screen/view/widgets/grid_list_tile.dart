@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/core/constants/color.dart';
 import 'package:ecommerce/core/constants/textstyle.dart';
 import 'package:ecommerce/core/utiles/app_screen_util.dart';
 import 'package:ecommerce/presentation/screens/home_screen/controller/home_controller.dart';
@@ -69,6 +71,8 @@ class GridListTile extends StatelessWidget {
                CommonImageView(
                 url: image.toString(),
               ),
+         
+
             ),
             SizedBox(
               height: 10.h,

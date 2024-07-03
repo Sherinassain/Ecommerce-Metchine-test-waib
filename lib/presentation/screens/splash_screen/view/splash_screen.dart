@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    splashCtrl.checkConnectivity();
+    splashCtrl.checkConnectivity(context);
     super.initState();
   }
 
