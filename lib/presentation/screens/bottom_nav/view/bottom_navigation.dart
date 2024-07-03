@@ -1,9 +1,9 @@
 
 import 'package:ecommerce/presentation/screens/contact_screen/view/contact_screen.dart';
 import 'package:ecommerce/presentation/screens/home_screen/view/home_screen.dart';
+import 'package:ecommerce/presentation/screens/product_screen/view/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 
 class BottomNav extends StatefulWidget {
@@ -17,7 +17,7 @@ class _BottomNavState extends State<BottomNav> {
   int selectedIndex = 0;
   final List<Widget> screens = [
     const HomeScreen(),
-    const HomeScreen(),
+    const ProductScreen(),
     const ContactScreen()
   ];
 

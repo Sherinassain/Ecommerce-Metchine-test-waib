@@ -65,6 +65,8 @@ flutter:
     - assets/images/Empty_animation.json
     - assets/images/img_splash.png
     - assets/images/img_wifi.png
+    - assets/images/splash_animation.json
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

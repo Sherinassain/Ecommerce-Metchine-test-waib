@@ -8,14 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-class GridListTile extends StatelessWidget {
+class ProductGridListTile extends StatelessWidget {
   final String? title;
   final String? price;
   final String? image;
   final String? description;
   final int index;
 
-  GridListTile(
+  ProductGridListTile(
       {super.key,
       required this.title,
       required this.price,
@@ -61,7 +61,6 @@ class GridListTile extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 15.0),
                 maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
             SizedBox(
@@ -71,10 +70,10 @@ class GridListTile extends StatelessWidget {
               '\$${price}',
               style: TextStyleClass.poppinsMedium(size: 15.00),
             ),
-            const Spacer(),
             // SizedBox(
             //   height: 10.h,
             // ),
+            const Spacer(),
             InkWell(
               onTap: () {
                 cartCtrl.addItem(homeCtrl.productList[index]);
