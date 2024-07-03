@@ -132,6 +132,7 @@ class _ViewBagScreenState extends State<ViewBagScreen> {
                                         title: 'Confirm Order',
                                         onRemove: () {
                                           cartCtrl.clearCart();
+                                          cartCtrl.clearStorage();
                                           AppUtils.oneTimeSnackBar(
                                               'Order Placed Successfully',
                                               bgColor: ColorConst.green3D);

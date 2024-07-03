@@ -88,6 +88,10 @@ class CartController extends GetxController {
  void clearCart() {
     items.clear();
   }
+   void clearStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('cart_items');
+  }
   @override
   void onInit() {
     _loadFromStorage();

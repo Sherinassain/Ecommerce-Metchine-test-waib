@@ -2,7 +2,7 @@ import 'package:ecommerce/core/constants/scale.dart';
 import 'package:ecommerce/core/utiles/app_utils.dart';
 import 'package:ecommerce/presentation/screens/bottom_nav/view/bottom_navigation.dart';
 import 'package:ecommerce/presentation/screens/network_error_screen/view/network_error_screen.dart';
-import 'package:ecommerce/routes/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {
@@ -16,14 +16,17 @@ class SplashController extends GetxController {
     isTapped = true;
     update();
     await Future.delayed(Durations.s1);
-
-    ///redirect to no internet screen if internet is not available
-    if (await AppUtils.isOnline()) {
+    if (kIsWeb) {
       Get.off(const BottomNav());
     } else {
-      Get.to(const NetworkErrorScreen());
-      // Get.to(NetworkErrorScreen());
+      ///redirect to no internet screen if internet is not available
+      if (await AppUtils.isOnline()) {
+        Get.off(const BottomNav());
+      } else {
+        Get.to(const NetworkErrorScreen());
+      }
     }
+
     super.onInit();
   }
 }
